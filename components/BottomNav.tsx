@@ -19,13 +19,22 @@ export default function BottomNav() {
   ];
 
   return (
-    <View className="absolute bottom-0 left-0 right-0 z-50 pb-6 px-4">
-      <View className="flex-row justify-around items-center bg-white/95 py-4 rounded-3xl shadow-2xl border border-gray-100">
+    <View className="absolute bottom-0 left-0 right-0 z-50">
+      <View
+        className="flex-row justify-around items-center bg-white py-4"
+        style={{
+          shadowColor: "#000",
+          shadowOffset: { width: 0, height: -2 },
+          shadowOpacity: 0.1,
+          shadowRadius: 20,
+          elevation: 10,
+        }}
+      >
         {tabs.map((tab, index) => {
           const active =
             pathname === tab.route ||
             (pathname === "/(tabs)" && tab.route === "/(tabs)");
-          const iconColor = active ? "#00D9A3" : "#CBD5E1";
+          const iconColor = active ? "#00E5A0" : "#CBD5E1";
 
           return (
             <TouchableOpacity

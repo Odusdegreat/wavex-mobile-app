@@ -12,10 +12,10 @@ export default function PortfolioItem({ item, onPress }: PortfolioItemProps) {
 
   const getIconBgColor = () => {
     const colors = {
-      btc: "bg-[#F7931A]",
-      bnb: "bg-[#F3BA2F]",
-      eth: "bg-[#627EEA]",
-      xrp: "bg-[#23292F]",
+      btc: "#F7931A",
+      bnb: "#F3BA2F",
+      eth: "#627EEA",
+      xrp: "#23292F",
     };
     return colors[item.icon];
   };
@@ -32,19 +32,27 @@ export default function PortfolioItem({ item, onPress }: PortfolioItemProps) {
 
   return (
     <TouchableOpacity
-      className="flex-row justify-between items-center bg-white p-4 mx-4 mb-3 rounded-2xl shadow-sm"
+      className="flex-row justify-between items-center bg-white p-4 mx-4 mb-3 rounded-2xl"
       onPress={onPress}
       activeOpacity={0.7}
+      style={{
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.05,
+        shadowRadius: 8,
+        elevation: 2,
+      }}
     >
       {/* Left Section */}
       <View className="flex-row items-center">
         <View
-          className={`w-11 h-11 rounded-full items-center justify-center mr-3 ${getIconBgColor()}`}
+          className="w-12 h-12 rounded-full items-center justify-center mr-3"
+          style={{ backgroundColor: getIconBgColor() }}
         >
           <Text className="text-2xl text-white font-bold">{getIcon()}</Text>
         </View>
         <View>
-          <Text className="text-base font-semibold text-gray-900 mb-0.5">
+          <Text className="text-base font-semibold text-gray-900 mb-1">
             {item.symbol}
           </Text>
           <Text className="text-[13px] text-gray-500">{item.name}</Text>
@@ -54,16 +62,20 @@ export default function PortfolioItem({ item, onPress }: PortfolioItemProps) {
       {/* Right Section */}
       <View className="items-end">
         <Text className="text-base font-semibold text-gray-900 mb-1">
-          ${item.price.toLocaleString("en-US", { minimumFractionDigits: 2 })}
+          $
+          {item.price.toLocaleString("en-US", {
+            minimumFractionDigits: item.price < 10 ? 4 : 2,
+            maximumFractionDigits: item.price < 10 ? 4 : 2,
+          })}
         </Text>
         <View
-          className={`px-2 py-0.5 rounded-lg ${
-            isPositive ? "bg-primary/10" : "bg-red-500/10"
+          className={`px-2.5 py-1 rounded-full ${
+            isPositive ? "bg-[#00E5A0]/10" : "bg-red-500/10"
           }`}
         >
           <Text
-            className={`text-xs font-semibold ${
-              isPositive ? "text-primary" : "text-red-500"
+            className={`text-xs font-bold ${
+              isPositive ? "text-[#00E5A0]" : "text-red-500"
             }`}
           >
             {isPositive ? "▲" : "▼"} {Math.abs(item.change)}%

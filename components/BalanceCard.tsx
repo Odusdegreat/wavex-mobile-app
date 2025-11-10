@@ -20,33 +20,31 @@ export default function BalanceCard({
   };
 
   return (
-    <View className="bg-[#0DF076] rounded-3xl p-6 mx-4 mt-4 mb-3">
+    <View className="bg-gradient-to-br from-[#00E5A0] to-[#00C887] rounded-3xl p-6 mx-4 mt-8 mb-4 shadow-xl">
       {/* Header */}
-      <View className="flex-row justify-between items-start mb-5">
+      <View className="flex-row justify-between items-start mb-6">
         <View>
-          <Text className="text-white text-sm opacity-90">Welcome to</Text>
-          <Text className="text-white text-3xl font-bold mt-0.5">Wavex</Text>
+          <Text className="text-white/90 text-sm mb-1">Welcome to</Text>
+          <Text className="text-white text-3xl font-bold">Wavex</Text>
         </View>
-        <View className="bg-white/20 w-10 h-10 rounded-full items-center justify-center">
-          <Text className="text-xl">🔔</Text>
+        <View className="bg-white/30 w-11 h-11 rounded-full items-center justify-center">
+          <Text className="text-white text-lg">🔔</Text>
         </View>
       </View>
 
       {/* Balance Section */}
-      <View className="mb-5">
-        <Text className="text-white text-[13px] opacity-85 mb-1.5">
-          My Balance
-        </Text>
+      <View className="mb-6">
+        <Text className="text-white/90 text-sm mb-2">My Balance</Text>
         <View className="flex-row items-center">
-          <Text className="text-white text-[32px] font-bold mr-3">
+          <Text className="text-white text-4xl font-bold mr-3">
             ${" "}
             {balance.toLocaleString("en-US", {
               minimumFractionDigits: 2,
               maximumFractionDigits: 2,
             })}
           </Text>
-          <View className="bg-white/25 px-2.5 py-1 rounded-xl">
-            <Text className="text-white text-xs font-semibold">
+          <View className="bg-white/30 px-3 py-1.5 rounded-full">
+            <Text className="text-white text-xs font-bold">
               ▲ {changePercent}%
             </Text>
           </View>
@@ -54,7 +52,7 @@ export default function BalanceCard({
       </View>
 
       {/* White Container with Buttons */}
-      <View className="bg-white rounded-2xl p-4 shadow-sm">
+      <View className="bg-white rounded-2xl p-4">
         <View className="flex-row gap-3">
           <ActionButton
             title="Deposit INR"

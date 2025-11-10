@@ -14,17 +14,17 @@ export default function ActionButton({
 }: ActionButtonProps) {
   return (
     <TouchableOpacity
-      className={`flex-1 py-3.5 px-5 rounded-xl items-center justify-center ${
+      className={`flex-1 py-3.5 px-4 rounded-xl items-center justify-center ${
         variant === "primary"
-          ? "bg-primary"
-          : "bg-white border-2 border-primary"
+          ? "bg-[#00E5A0]"
+          : "bg-white border-2 border-[#00E5A0]"
       }`}
       onPress={onPress}
       activeOpacity={0.7}
     >
       <Text
         className={`text-[15px] font-semibold ${
-          variant === "primary" ? "text-white" : "text-primary"
+          variant === "primary" ? "text-white" : "text-[#00E5A0]"
         }`}
       >
         {title}
