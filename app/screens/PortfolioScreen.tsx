@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import { View, Text, ScrollView, TouchableOpacity } from "react-native";
-import { StatusBar } from "expo-status-bar";
-import { Feather } from "@expo/vector-icons";
-import StatsCard from "@/components/StatsCard";
-import ChartItem from "@/components/ChartItem";
 import BottomNav from "@/components/BottomNav";
+import ChartItem from "@/components/ChartItem";
+import StatsCard from "@/components/StatsCard";
+import { Feather } from "@expo/vector-icons";
+import { StatusBar } from "expo-status-bar";
+import React, { useState } from "react";
+import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 
 interface CryptoChart {
   id: string;
@@ -87,7 +87,7 @@ export default function PortfolioScreen() {
         {/* Header */}
         <View className="flex-row items-center justify-between px-4 pt-12 pb-4">
           <TouchableOpacity
-            className="w-10 h-10 rounded-full bg-white items-center justify-center"
+            className="w-10 h-10 rounded-full  items-center justify-center"
             style={{
               shadowColor: "#000",
               shadowOffset: { width: 0, height: 2 },
@@ -95,14 +95,10 @@ export default function PortfolioScreen() {
               shadowRadius: 4,
               elevation: 2,
             }}
-          >
-            <Feather name="arrow-left" size={20} color="#1E293B" />
-          </TouchableOpacity>
-
-          <Text className="text-xl font-bold text-gray-900">Portfolio</Text>
+          ></TouchableOpacity>
 
           <TouchableOpacity
-            className="w-10 h-10 rounded-full bg-white items-center justify-center"
+            className="w-10 h-10 rounded-full items-center justify-center"
             style={{
               shadowColor: "#000",
               shadowOffset: { width: 0, height: 2 },
@@ -110,9 +106,7 @@ export default function PortfolioScreen() {
               shadowRadius: 4,
               elevation: 2,
             }}
-          >
-            <Feather name="more-vertical" size={20} color="#1E293B" />
-          </TouchableOpacity>
+          ></TouchableOpacity>
         </View>
 
         {/* Stats Cards */}

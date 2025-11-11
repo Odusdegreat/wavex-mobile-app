@@ -36,7 +36,6 @@ export default function SettingsScreen() {
         <View className="px-4 pt-12 pb-4">
           <View className="flex-row items-center justify-between">
             <View>
-              <Text className="text-2xl font-bold text-gray-900">Settings</Text>
               <Text className="text-sm text-gray-500 mt-1">
                 Manage your account
               </Text>

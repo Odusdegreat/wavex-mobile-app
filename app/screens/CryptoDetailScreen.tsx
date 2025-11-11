@@ -2,14 +2,12 @@ import ButtomNav from "@/components/BottomNav";
 import MarketStatItem from "@/components/MarketStatItem";
 import TimeFrameButton from "@/components/TimeFrameButton";
 import { Feather } from "@expo/vector-icons";
-import { useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import Svg, { Path } from "react-native-svg";
 
 export default function CryptoDetailScreen() {
-  const router = useRouter();
   const [selectedTimeFrame, setSelectedTimeFrame] = useState("1H");
 
   const timeFrames = ["1H", "24 H", "1 W", "1 M", "6 M", "1 Y", "All"];
@@ -53,12 +51,7 @@ export default function CryptoDetailScreen() {
         {/* Header */}
         <View className="bg-white px-4 pt-12 pb-4">
           <View className="flex-row items-center justify-between mb-4">
-            <TouchableOpacity
-              onPress={() => router.back()}
-              className="w-10 h-10 rounded-full bg-gray-100 items-center justify-center"
-            >
-              <Feather name="arrow-left" size={20} color="#1E293B" />
-            </TouchableOpacity>
+            <TouchableOpacity></TouchableOpacity>
 
             <View className="flex-row items-center">
               <TouchableOpacity className="mr-3">
