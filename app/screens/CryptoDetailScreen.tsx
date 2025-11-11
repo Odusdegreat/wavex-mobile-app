@@ -1,3 +1,4 @@
+import ButtomNav from "@/components/BottomNav";
 import MarketStatItem from "@/components/MarketStatItem";
 import TimeFrameButton from "@/components/TimeFrameButton";
 import { Feather } from "@expo/vector-icons";
@@ -186,6 +187,7 @@ export default function CryptoDetailScreen() {
           ))}
         </View>
       </ScrollView>
+      <ButtomNav />
     </View>
   );
 }
