@@ -3,11 +3,13 @@ import ProfileCard from "@/components/ProfileCard";
 import SettingsItem from "@/components/SettingsItem";
 import SettingsSection from "@/components/SettingsSection";
 import { Feather } from "@expo/vector-icons";
+import { useRouter } from "expo-router"; // 1. IMPORT THE ROUTER
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
 import { Alert, ScrollView, Text, TouchableOpacity, View } from "react-native";
 
 export default function SettingsScreen() {
+  const router = useRouter(); // 2. INITIALIZE THE ROUTER
   const [notifications, setNotifications] = useState(true);
   const [biometric, setBiometric] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
@@ -66,7 +68,9 @@ export default function SettingsScreen() {
             subtitle="Update your details"
             iconBg="#DBEAFE"
             iconColor="#3B82F6"
-            onPress={() => console.log("Personal Info")}
+            // 3. USE THE ROUTER TO NAVIGATE
+            // (Make sure this path matches your file location in the 'app' folder)
+            onPress={() => router.push("/screens/PersonalInfoScreen")}
           />
           <View className="h-px bg-gray-100 ml-16" />
           <SettingsItem
@@ -75,7 +79,7 @@ export default function SettingsScreen() {
             subtitle="Keep your account secure"
             iconBg="#FCE7F3"
             iconColor="#EC4899"
-            onPress={() => console.log("Change Password")}
+            onPress={() => router.push("/screens/ChagePasswordScreen")} // You can route this later
           />
           <View className="h-px bg-gray-100 ml-16" />
           <SettingsItem
@@ -84,7 +88,7 @@ export default function SettingsScreen() {
             subtitle="Manage cards & banks"
             iconBg="#FEF3C7"
             iconColor="#F59E0B"
-            onPress={() => console.log("Payment Methods")}
+            onPress={() => router.push("/screens/PaymentMethodsScreen")} // You can route this later
           />
         </SettingsSection>
 
@@ -129,7 +133,7 @@ export default function SettingsScreen() {
             subtitle="Get assistance"
             iconBg="#DBEAFE"
             iconColor="#3B82F6"
-            onPress={() => console.log("Help")}
+            onPress={() => router.push("/screens/HelpSupportScreen")}
           />
           <View className="h-px bg-gray-100 ml-16" />
           <SettingsItem
@@ -137,7 +141,7 @@ export default function SettingsScreen() {
             title="Privacy Policy"
             iconBg="#D1FAE5"
             iconColor="#10B981"
-            onPress={() => console.log("Privacy")}
+            onPress={() => router.push("/screens/PrivacyPolicyScreen")}
           />
           <View className="h-px bg-gray-100 ml-16" />
           <SettingsItem
@@ -145,7 +149,7 @@ export default function SettingsScreen() {
             title="Terms & Conditions"
             iconBg="#FEF3C7"
             iconColor="#F59E0B"
-            onPress={() => console.log("Terms")}
+            onPress={() => router.push("/screens/TermsConditionsScreen")}
           />
           <View className="h-px bg-gray-100 ml-16" />
           <SettingsItem
