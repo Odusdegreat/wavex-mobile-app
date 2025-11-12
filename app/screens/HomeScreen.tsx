@@ -59,7 +59,7 @@ export default function HomeScreen() {
 
         {/* Portfolio Header */}
         <View className="flex-row justify-between items-center px-4 mb-4 mt-2">
-          <Text className="text-xl font-bold text-gray-900">My portfolio</Text>
+          <Text className="text-xl font-bold text-gray-900">My Portfolio</Text>
           <TouchableOpacity activeOpacity={0.7}>
             <Text className="text-sm font-semibold text-[#00E5A0]">
               See all

@@ -1,7 +1,17 @@
-import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
-import Svg, { Polyline } from 'react-native-svg';
+import React from "react";
+import { Text, TouchableOpacity, View } from "react-native";
+import { Polyline, Svg } from "react-native-svg";
+// 1. IMPORT our new animation tool
+import { useAnimatedCountUp } from "../app/hooks/useAnimatedCountUp";
 
+// Helper function to get the number from "2.73 BTC"
+const parseAmount = (amountStr: string) => {
+  const value = parseFloat(amountStr.split(" ")[0]);
+  const unit = amountStr.split(" ")[1] || "";
+  return { value: value || 0, unit };
+};
+
+// Props from your PortfolioScreen
 interface ChartItemProps {
   name: string;
   symbol: string;
@@ -12,59 +22,63 @@ interface ChartItemProps {
   iconBg: string;
   chartColor: string;
   chartPoints: string;
-  onPress?: () => void;
+  onPress: () => void;
 }
 
-export default function ChartItem({
-  name,
-  symbol,
-  change,
-  price,
-  amount,
-  icon,
-  iconBg,
-  chartColor,
-  chartPoints,
-  onPress,
-}: ChartItemProps) {
+export default function ChartItem(props: ChartItemProps) {
+  const {
+    name,
+    change,
+    price,
+    amount,
+    icon,
+    iconBg,
+    chartColor,
+    chartPoints,
+    onPress,
+  } = props;
+
+  // 2. USE the tool for all 3 numbers
+  const animatedPrice = useAnimatedCountUp(price);
+  const animatedChange = useAnimatedCountUp(change);
+
+  const { value: amountValue, unit: amountUnit } = parseAmount(amount);
+  const animatedAmount = useAnimatedCountUp(amountValue);
+
   const isPositive = change >= 0;
 
   return (
     <TouchableOpacity
-      className="flex-row items-center justify-between bg-white p-4 mx-4 mb-3 rounded-2xl"
       onPress={onPress}
-      activeOpacity={0.7}
+      className="bg-white rounded-2xl p-4 mx-4 mb-4 flex-row items-center"
       style={{
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.05,
-        shadowRadius: 8,
         elevation: 2,
+        shadowColor: "#000",
+        shadowOpacity: 0.05,
+        shadowRadius: 4,
+        shadowOffset: { width: 0, height: 2 },
       }}
     >
-      {/* Left: Icon + Info */}
-      <View className="flex-row items-center flex-1">
-        <View
-          className="w-10 h-10 rounded-lg items-center justify-center mr-3"
-          style={{ backgroundColor: iconBg }}
-        >
-          <Text className="text-white text-lg font-bold">{icon}</Text>
-        </View>
-        <View>
-          <Text className="text-base font-bold text-gray-900">{symbol}</Text>
-          <Text 
-            className={`text-xs font-semibold ${
-              isPositive ? 'text-[#00F5A0]' : 'text-red-500'
-            }`}
-          >
-            {isPositive ? '+' : ''}{change.toFixed(2)}%
-          </Text>
-        </View>
+      {/* Icon */}
+      <View
+        className="w-12 h-12 rounded-full items-center justify-center mr-3"
+        style={{ backgroundColor: iconBg }}
+      >
+        <Text className="text-white text-2xl font-bold">{icon}</Text>
       </View>
 
-      {/* Middle: Chart */}
-      <View className="mx-3">
-        <Svg width="80" height="40" viewBox="0 0 80 40">
+      {/* Info */}
+      <View className="flex-1">
+        <Text className="text-base font-bold text-gray-900">{name}</Text>
+        <Text className="text-sm text-gray-500">
+          {/* 3. DISPLAY animated amount */}
+          {animatedAmount.toFixed(2)} {amountUnit}
+        </Text>
+      </View>
+
+      {/* Chart */}
+      <View className="mx-2" style={{ width: 60, height: 40 }}>
+        <Svg height="40" width="60">
           <Polyline
             points={chartPoints}
             fill="none"
@@ -74,12 +88,24 @@ export default function ChartItem({
         </Svg>
       </View>
 
-      {/* Right: Price + Amount */}
-      <View className="items-end">
-        <Text className="text-base font-bold text-gray-900">
-          ${price.toLocaleString('en-US', { minimumFractionDigits: 2 })}
+      {/* Price & Change */}
+      <View className="items-end" style={{ minWidth: 90 }}>
+        <Text className="text-base font-bold text-gray-900" numberOfLines={1}>
+          {/* 3. DISPLAY animated price */}$
+          {animatedPrice.toLocaleString("en-US", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })}
         </Text>
-        <Text className="text-xs text-gray-500">{amount}</Text>
+        <Text
+          className={`text-sm font-semibold ${
+            isPositive ? "text-green-500" : "text-red-500"
+          }`}
+        >
+          {/* 3. DISPLAY animated change */}
+          {animatedChange >= 0 ? "▲" : "▼"}{" "}
+          {Math.abs(animatedChange).toFixed(2)}%
+        </Text>
       </View>
     </TouchableOpacity>
   );
