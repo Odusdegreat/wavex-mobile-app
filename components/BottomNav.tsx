@@ -81,7 +81,7 @@ export default function BottomNav() {
   };
 
   return (
-    <View className="absolute bottom-0 left-0 right-0 z-50">
+    <View className="absolute bottom-0 left-0 right-0 z-50 ]">
       <View
         className="flex-row justify-around items-center bg-white py-3"
         style={styles.shadow}
