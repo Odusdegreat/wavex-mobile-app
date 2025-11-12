@@ -23,13 +23,15 @@ export default function ProfileCard() {
         <View className="flex-row items-center justify-between">
           <View className="flex-row items-center">
             <View className="w-16 h-16 bg-white/30 rounded-full items-center justify-center mr-4">
-              <Text className="text-white text-2xl font-bold">JD</Text>
+              <Text className="text-white text-2xl font-bold">OO</Text>
             </View>
             <View>
               <Text className="text-white text-xl font-bold mb-1">
-                John Doe
+                Oluwatobi Odubote
               </Text>
-              <Text className="text-white/80 text-sm">john.doe@email.com</Text>
+              <Text className="text-white/80 text-sm">
+                tobiodubote@gmail.com
+              </Text>
             </View>
           </View>
           <TouchableOpacity

@@ -7,10 +7,10 @@ import { Alert, ScrollView, Text, TouchableOpacity, View } from "react-native";
 
 export default function PersonalInfoScreen() {
   const router = useRouter();
-  const [fullName, setFullName] = useState("John Doe");
-  const [email, setEmail] = useState("john.doe@email.com");
-  const [phone, setPhone] = useState("+234 123 456 7890");
-  const [address, setAddress] = useState("123 Main Street, Lagos");
+  const [fullName, setFullName] = useState("Oluwatobi Odubote");
+  const [email, setEmail] = useState("tobiodubote@gmail.com");
+  const [phone, setPhone] = useState("+234 818 395 3978");
+  const [address, setAddress] = useState("N/A");
 
   const handleSave = () => {
     Alert.alert("Success", "Personal information updated successfully!");
@@ -37,7 +37,7 @@ export default function PersonalInfoScreen() {
         {/* Profile Picture */}
         <View className="items-center mb-8">
           <View className="w-24 h-24 bg-gradient-to-br from-[#00F5A0] to-[#00D68F] rounded-full items-center justify-center mb-4">
-            <Text className="text-white text-4xl font-bold">JD</Text>
+            <Text className="text-white text-4xl font-bold">OO</Text>
           </View>
           <TouchableOpacity>
             <Text className="text-[#00E5A0] text-sm font-semibold">
