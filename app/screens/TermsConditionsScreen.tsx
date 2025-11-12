@@ -34,7 +34,7 @@ export default function TermsConditionsScreen() {
             1. Acceptance of Terms
           </Text>
           <Text className="text-sm text-gray-700 mb-4 leading-6">
-            By accessing and using CoinPro, you accept and agree to be bound by
+            By accessing and using WaVex, you accept and agree to be bound by
             the terms and provision of this agreement.
           </Text>
 
