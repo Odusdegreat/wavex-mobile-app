@@ -43,7 +43,10 @@ export default function BottomNav() {
     scalesRef.current = tabs.map(() => new Animated.Value(1));
   }
 
-  // animate active tab
+  // State to track which tab is currently being pressed down
+  const [pressedIndex, setPressedIndex] = React.useState<number | null>(null);
+
+  // Animate active tab
   React.useEffect(() => {
     const activeIndex = tabs.findIndex(
       (t) =>
@@ -52,7 +55,7 @@ export default function BottomNav() {
     );
     const animations = scalesRef.current.map((val, i) =>
       Animated.spring(val, {
-        toValue: i === activeIndex ? 1.2 : 1,
+        toValue: i === activeIndex ? 1.2 : 1, // Active tab scales up
         useNativeDriver: true,
         speed: 10,
         bounciness: 12,
@@ -61,27 +64,25 @@ export default function BottomNav() {
     Animated.parallel(animations).start();
   }, [pathname, tabs]);
 
-  const handlePress = (route: string, index: number) => {
-    // animate on press
-    Animated.sequence([
-      Animated.timing(scalesRef.current[index], {
-        toValue: 1.25,
-        duration: 100,
-        useNativeDriver: true,
-      }),
-      Animated.spring(scalesRef.current[index], {
-        toValue: 1.1,
-        bounciness: 10,
-        speed: 8,
-        useNativeDriver: true,
-      }),
-    ]).start();
+  const handlePressIn = (index: number) => {
+    setPressedIndex(index);
+    // Animate scale up slightly on press
+    Animated.timing(scalesRef.current[index], {
+      toValue: 1.15,
+      duration: 100,
+      useNativeDriver: true,
+    }).start();
+  };
 
+  const handlePressOut = (route: string, index: number) => {
+    setPressedIndex(null); // Clear pressed state
+
+    // Navigate immediately. The useEffect will handle the "active" animation.
     router.push(route as any);
   };
 
   return (
-    <View className="absolute bottom-0 left-0 right-0 z-50 ]">
+    <View className="absolute bottom-0 left-0 right-0 z-50 ">
       <View
         className="flex-row justify-around items-center bg-white py-3"
         style={styles.shadow}
@@ -90,34 +91,40 @@ export default function BottomNav() {
           const active =
             pathname === tab.route ||
             (pathname === "/(tabs)" && tab.route === "/(tabs)");
-          const iconColor = active ? "#00E5A0" : "#94A3B8";
-          const textColor = active ? "#00E5A0" : "#94A3B8";
-          const bgColor = active ? "rgba(0, 229, 160, 0.15)" : "transparent";
+
+          // --- Define Colors ---
+          const baseColor = "#94A3B8";
+          const activeColor = "#00E5A0";
+
+          // Use activeColor if active OR if it's currently being pressed
+          const color =
+            active || pressedIndex === index ? activeColor : baseColor;
 
           return (
             <TouchableWithoutFeedback
               key={tab.route}
-              onPress={() => handlePress(tab.route, index)}
+              onPressIn={() => handlePressIn(index)}
+              onPressOut={() => handlePressOut(tab.route, index)}
             >
               <Animated.View
                 className="items-center justify-center px-3 py-1 rounded-full"
                 style={{
                   transform: [{ scale: scalesRef.current[index] }],
-                  backgroundColor: bgColor,
+                  backgroundColor: "transparent", // Background is always transparent
                 }}
               >
                 {tab.library === "feather" ? (
-                  <Feather name={tab.icon as any} size={24} color={iconColor} />
+                  <Feather name={tab.icon as any} size={24} color={color} />
                 ) : (
                   <MaterialCommunityIcons
                     name={tab.icon as any}
                     size={26}
-                    color={iconColor}
+                    color={color}
                   />
                 )}
                 <Text
                   className="text-xs mt-1 font-medium"
-                  style={{ color: textColor }}
+                  style={{ color: color }}
                 >
                   {tab.label}
                 </Text>
