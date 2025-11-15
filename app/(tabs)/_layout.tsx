@@ -10,8 +10,7 @@ export default function TabLayout() {
     >
       <Tabs.Screen name="index" options={{ title: "" }} />
       <Tabs.Screen name="portfolio" options={{ title: "" }} />
-      <Tabs.Screen name="transactions" options={{ title: "" }} />{" "}
-      {/* ✅ This must exist! */}
+      <Tabs.Screen name="transactions" options={{ title: "" }} />
       <Tabs.Screen name="settings" options={{ title: "" }} />
     </Tabs>
   );
