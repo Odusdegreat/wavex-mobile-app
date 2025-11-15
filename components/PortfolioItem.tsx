@@ -1,6 +1,7 @@
 import type { Portfolio } from "@/types";
 import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
+import { useTheme } from "../context/ThemeContext";
 
 interface PortfolioItemProps {
   item: Portfolio;
@@ -8,16 +9,17 @@ interface PortfolioItemProps {
 }
 
 export default function PortfolioItem({ item, onPress }: PortfolioItemProps) {
+  const { colors } = useTheme();
   const isPositive = item.change >= 0;
 
   const getIconBgColor = () => {
-    const colors = {
+    const iconColors = {
       btc: "#F7931A",
       bnb: "#F3BA2F",
       eth: "#627EEA",
       xrp: "#23292F",
     };
-    return colors[item.icon];
+    return iconColors[item.icon];
   };
 
   const getIcon = () => {
@@ -32,16 +34,17 @@ export default function PortfolioItem({ item, onPress }: PortfolioItemProps) {
 
   return (
     <TouchableOpacity
-      className="flex-row justify-between items-center bg-white p-4 mx-4 mb-3 rounded-2xl"
-      onPress={onPress}
-      activeOpacity={0.7}
       style={{
+        backgroundColor: colors.card,
         shadowColor: "#000",
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.05,
         shadowRadius: 8,
         elevation: 2,
       }}
+      className="flex-row items-center justify-between p-4 mx-4 mb-3 rounded-2xl"
+      onPress={onPress}
+      activeOpacity={0.7}
     >
       {/* Left Section */}
       <View className="flex-row items-center">
@@ -52,16 +55,24 @@ export default function PortfolioItem({ item, onPress }: PortfolioItemProps) {
           <Text className="text-2xl text-white font-bold">{getIcon()}</Text>
         </View>
         <View>
-          <Text className="text-base font-semibold text-gray-900 mb-1">
+          <Text
+            style={{ color: colors.text }}
+            className="text-base font-semibold mb-1"
+          >
             {item.symbol}
           </Text>
-          <Text className="text-[13px] text-gray-500">{item.name}</Text>
+          <Text style={{ color: colors.subtext }} className="text-[13px]">
+            {item.name}
+          </Text>
         </View>
       </View>
 
       {/* Right Section */}
       <View className="items-end">
-        <Text className="text-base font-semibold text-gray-900 mb-1">
+        <Text
+          style={{ color: colors.text }}
+          className="text-base font-semibold mb-1"
+        >
           $
           {item.price.toLocaleString("en-US", {
             minimumFractionDigits: item.price < 10 ? 4 : 2,

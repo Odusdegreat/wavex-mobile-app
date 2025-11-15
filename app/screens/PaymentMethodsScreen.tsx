@@ -4,9 +4,14 @@ import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { Alert, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import PaymentCard from "../../components/PaymetCard";
+import { useTheme } from "../../context/ThemeContext"; // Make sure path is correct
 
 export default function PaymentMethodsScreen() {
   const router = useRouter();
+  // 1. Get theme colors and mode
+  const { colors } = useTheme();
+  const isDarkMode =
+    colors.background === "#000000" || colors.background === "#1a1a1a"; // Determine dark mode from background color
 
   const handleAddPayment = () => {
     Alert.alert("Add Payment", "Add new payment method feature coming soon!");
@@ -28,19 +33,31 @@ export default function PaymentMethodsScreen() {
   };
 
   return (
-    <View className="flex-1 bg-[#F5F7FA]">
-      <StatusBar style="dark" />
+    // 2. Apply background color from theme
+    <View style={{ flex: 1, backgroundColor: colors.background }}>
+      {/* 3. Toggle status bar based on theme */}
+      <StatusBar style={isDarkMode ? "light" : "dark"} />
 
-      {/* Header */}
-      <View className="bg-white px-4 pt-12 pb-4 flex-row items-center justify-between">
+      {/* 4. Apply card/header background from theme */}
+      <View
+        className="bg-white px-4 pt-12 pb-4 flex-row items-center justify-between"
+        style={{ backgroundColor: colors.card }} // Use card/header background
+      >
         <View className="flex-row items-center">
           <TouchableOpacity
             onPress={() => router.back()}
-            className="w-10 h-10 rounded-full bg-gray-100 items-center justify-center mr-3"
+            className="w-10 h-10 rounded-full items-center justify-center mr-3"
+            // 5. Apply secondary background from theme
+            style={{ backgroundColor: colors.inputBg }}
           >
-            <Feather name="arrow-left" size={20} color="#1E293B" />
+            {/* 6. Apply text/icon color from theme */}
+            <Feather name="arrow-left" size={20} color={colors.text} />
           </TouchableOpacity>
-          <Text className="text-xl font-bold text-gray-900">
+          <Text
+            className="text-xl font-bold"
+            // 6. Apply text color from theme
+            style={{ color: colors.text }}
+          >
             Payment Methods
           </Text>
         </View>
@@ -53,11 +70,18 @@ export default function PaymentMethodsScreen() {
       </View>
 
       <ScrollView className="flex-1 px-4 pt-6">
-        {/* Cards Section */}
-        <Text className="text-sm font-semibold text-gray-500 uppercase mb-3">
+        {/* 7. Apply secondary text color from theme */}
+        <Text
+          className="text-sm font-semibold text-gray-500 uppercase mb-3"
+          style={{ color: colors.subtext }}
+        >
           Credit & Debit Cards
         </Text>
 
+        {/* NOTE: These PaymentCard components MUST be themed internally.
+          You need to edit 'PaymentCard.tsx' and make it use useTheme()
+          to change its own background and text colors.
+        */}
         <PaymentCard
           type="card"
           title="Visa Card"
@@ -73,8 +97,11 @@ export default function PaymentMethodsScreen() {
           onDelete={() => handleDeletePayment("card")}
         />
 
-        {/* Bank Accounts Section */}
-        <Text className="text-sm font-semibold text-gray-500 uppercase mb-3 mt-6">
+        {/* 7. Apply secondary text color from theme */}
+        <Text
+          className="text-sm font-semibold text-gray-500 uppercase mb-3 mt-6"
+          style={{ color: colors.subtext }}
+        >
           Bank Accounts
         </Text>
 

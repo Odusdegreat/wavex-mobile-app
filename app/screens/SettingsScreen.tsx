@@ -3,16 +3,17 @@ import ProfileCard from "@/components/ProfileCard";
 import SettingsItem from "@/components/SettingsItem";
 import SettingsSection from "@/components/SettingsSection";
 import { Feather } from "@expo/vector-icons";
-import { useRouter } from "expo-router"; // 1. IMPORT THE ROUTER
+import { useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
 import { Alert, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { useTheme } from "../../context/ThemeContext";
 
 export default function SettingsScreen() {
-  const router = useRouter(); // 2. INITIALIZE THE ROUTER
+  const router = useRouter();
+  const { isDark, toggleTheme, colors } = useTheme(); // Dark mode hook
   const [notifications, setNotifications] = useState(true);
   const [biometric, setBiometric] = useState(false);
-  const [darkMode, setDarkMode] = useState(false);
 
   const handleLogout = () => {
     Alert.alert("Logout", "Are you sure you want to logout?", [
@@ -26,8 +27,8 @@ export default function SettingsScreen() {
   };
 
   return (
-    <View className="flex-1 bg-[#F5F7FA]">
-      <StatusBar style="dark" />
+    <View style={{ flex: 1, backgroundColor: colors.background }}>
+      <StatusBar style={isDark ? "light" : "dark"} />
 
       <ScrollView
         className="flex-1"
@@ -38,13 +39,20 @@ export default function SettingsScreen() {
         <View className="px-4 pt-12 pb-4">
           <View className="flex-row items-center justify-between">
             <View>
-              <Text className="text-sm text-gray-500 mt-1">
+              <Text
+                style={{ color: colors.text }}
+                className="text-2xl font-bold"
+              >
+                Settings
+              </Text>
+              <Text style={{ color: colors.subtext }} className="text-sm mt-1">
                 Manage your account
               </Text>
             </View>
             <TouchableOpacity
-              className="w-10 h-10 rounded-full bg-white items-center justify-center"
+              className="w-10 h-10 rounded-full items-center justify-center"
               style={{
+                backgroundColor: colors.card,
                 shadowColor: "#000",
                 shadowOffset: { width: 0, height: 2 },
                 shadowOpacity: 0.05,
@@ -52,7 +60,7 @@ export default function SettingsScreen() {
                 elevation: 2,
               }}
             >
-              <Feather name="bell" size={20} color="#1E293B" />
+              <Feather name="bell" size={20} color={colors.text} />
             </TouchableOpacity>
           </View>
         </View>
@@ -68,27 +76,31 @@ export default function SettingsScreen() {
             subtitle="Update your details"
             iconBg="#DBEAFE"
             iconColor="#3B82F6"
-            // 3. USE THE ROUTER TO NAVIGATE
-            // (Make sure this path matches your file location in the 'app' folder)
-            onPress={() => router.push("/screens/PersonalInfoScreen")}
+            onPress={() => router.push("/(tabs)/personalinformation")}
           />
-          <View className="h-px bg-gray-100 ml-16" />
+          <View
+            style={{ backgroundColor: colors.border }}
+            className="h-px ml-16"
+          />
           <SettingsItem
             icon="lock"
             title="Change Password"
             subtitle="Keep your account secure"
             iconBg="#FCE7F3"
             iconColor="#EC4899"
-            onPress={() => router.push("/screens/ChagePasswordScreen")} // You can route this later
+            onPress={() => router.push("/(tabs)/changepassword")}
           />
-          <View className="h-px bg-gray-100 ml-16" />
+          <View
+            style={{ backgroundColor: colors.border }}
+            className="h-px ml-16"
+          />
           <SettingsItem
             icon="credit-card"
             title="Payment Methods"
             subtitle="Manage cards & banks"
             iconBg="#FEF3C7"
             iconColor="#F59E0B"
-            onPress={() => router.push("/screens/PaymentMethodsScreen")} // You can route this later
+            onPress={() => router.push("/(tabs)/paymentmethods")}
           />
         </SettingsSection>
 
@@ -103,7 +115,10 @@ export default function SettingsScreen() {
             iconBg="#D1FAE5"
             iconColor="#10B981"
           />
-          <View className="h-px bg-gray-100 ml-16" />
+          <View
+            style={{ backgroundColor: colors.border }}
+            className="h-px ml-16"
+          />
           <SettingsItem
             icon="smartphone"
             title="Biometric Authentication"
@@ -113,13 +128,16 @@ export default function SettingsScreen() {
             iconBg="#E0E7FF"
             iconColor="#6366F1"
           />
-          <View className="h-px bg-gray-100 ml-16" />
+          <View
+            style={{ backgroundColor: colors.border }}
+            className="h-px ml-16"
+          />
           <SettingsItem
-            icon="moon"
-            title="Dark Mode"
+            icon={isDark ? "sun" : "moon"}
+            title={isDark ? "Light Mode" : "Dark Mode"}
             showSwitch
-            switchValue={darkMode}
-            onSwitchChange={setDarkMode}
+            switchValue={isDark}
+            onSwitchChange={toggleTheme}
             iconBg="#F3E8FF"
             iconColor="#A855F7"
           />
@@ -133,17 +151,23 @@ export default function SettingsScreen() {
             subtitle="Get assistance"
             iconBg="#DBEAFE"
             iconColor="#3B82F6"
-            onPress={() => router.push("/screens/HelpSupportScreen")}
+            onPress={() => router.push("/(tabs)/helpsupport")}
           />
-          <View className="h-px bg-gray-100 ml-16" />
+          <View
+            style={{ backgroundColor: colors.border }}
+            className="h-px ml-16"
+          />
           <SettingsItem
             icon="shield"
             title="Privacy Policy"
             iconBg="#D1FAE5"
             iconColor="#10B981"
-            onPress={() => router.push("/screens/PrivacyPolicyScreen")}
+            onPress={() => router.push("/(tabs)/privacypolicy")}
           />
-          <View className="h-px bg-gray-100 ml-16" />
+          <View
+            style={{ backgroundColor: colors.border }}
+            className="h-px ml-16"
+          />
           <SettingsItem
             icon="file-text"
             title="Terms & Conditions"
@@ -151,23 +175,26 @@ export default function SettingsScreen() {
             iconColor="#F59E0B"
             onPress={() => router.push("/screens/TermsConditionsScreen")}
           />
-          <View className="h-px bg-gray-100 ml-16" />
+          <View
+            style={{ backgroundColor: colors.border }}
+            className="h-px ml-16"
+          />
           <SettingsItem
             icon="info"
             title="About"
             subtitle="Version 1.0.0"
             iconBg="#E0E7FF"
             iconColor="#6366F1"
-            onPress={() => console.log("About")}
           />
         </SettingsSection>
 
         {/* Logout Button */}
         <TouchableOpacity
-          className="mx-4 mt-6 bg-white rounded-2xl p-4 flex-row items-center justify-center"
+          className="mx-4 mt-6 rounded-2xl p-4 flex-row items-center justify-center"
           onPress={handleLogout}
           activeOpacity={0.7}
           style={{
+            backgroundColor: colors.card,
             shadowColor: "#000",
             shadowOffset: { width: 0, height: 2 },
             shadowOpacity: 0.05,
@@ -180,7 +207,6 @@ export default function SettingsScreen() {
             Logout
           </Text>
         </TouchableOpacity>
-
         <View className="h-8" />
       </ScrollView>
 

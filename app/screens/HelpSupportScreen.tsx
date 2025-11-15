@@ -4,9 +4,13 @@ import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import FAQItem from "../../components/FAQItem";
+import { useTheme } from "../../context/ThemeContext"; // Make sure path is correct
 
 export default function HelpSupportScreen() {
   const router = useRouter();
+  // 1. Get theme colors and mode
+  const { colors } = useTheme();
+  // Remove isDarkMode reference since it's not part of colors
 
   const faqs = [
     {
@@ -32,86 +36,135 @@ export default function HelpSupportScreen() {
   ];
 
   return (
-    <View className="flex-1 bg-[#F5F7FA]">
-      <StatusBar style="dark" />
+    // 2. Apply background color from theme
+    <View style={{ flex: 1, backgroundColor: colors.background }}>
+      {/* 3. Toggle status bar based on theme */}
+      <StatusBar style="auto" />
 
-      {/* Header */}
-      <View className="bg-white px-4 pt-12 pb-4 flex-row items-center">
+      {/* 4. Apply card/header background from theme */}
+      <View
+        className="px-4 pt-12 pb-4 flex-row items-center"
+        style={{ backgroundColor: colors.card }}
+      >
         <TouchableOpacity
           onPress={() => router.back()}
-          className="w-10 h-10 rounded-full bg-gray-100 items-center justify-center mr-3"
+          className="w-10 h-10 rounded-full items-center justify-center mr-3"
+          // 5. Apply secondary background from theme
+          style={{ backgroundColor: colors.inputBg }}
         >
-          <Feather name="arrow-left" size={20} color="#1E293B" />
+          {/* 6. Apply text/icon color from theme */}
+          <Feather name="arrow-left" size={20} color={colors.text} />
         </TouchableOpacity>
-        <Text className="text-xl font-bold text-gray-900">Help & Support</Text>
+        <Text
+          className="text-xl font-bold"
+          // 6. Apply text color from theme
+          style={{ color: colors.text }}
+        >
+          Help & Support
+        </Text>
       </View>
 
       <ScrollView className="flex-1 px-4 pt-6">
-        {/* Contact Options */}
+        {/* 7. Theme the Contact Options cards */}
         <View className="flex-row gap-3 mb-6">
+          {/* Email Card */}
           <TouchableOpacity
-            className="flex-1 bg-white rounded-xl p-4 items-center"
+            className="flex-1 rounded-xl p-4 items-center"
             activeOpacity={0.7}
             style={{
+              backgroundColor: colors.card, // Use theme card color
               shadowColor: "#000",
               shadowOffset: { width: 0, height: 2 },
-              shadowOpacity: 0.05,
+              shadowOpacity: 0.05, // Always show shadow
               shadowRadius: 8,
               elevation: 2,
             }}
           >
-            <View className="w-12 h-12 bg-blue-100 rounded-full items-center justify-center mb-2">
+            <View
+              className="w-12 h-12 rounded-full items-center justify-center mb-2"
+              style={{ backgroundColor: colors.inputBg }} // Use theme inputBg as secondary bg
+            >
               <Feather name="mail" size={24} color="#3B82F6" />
             </View>
-            <Text className="text-sm font-semibold text-gray-900">Email</Text>
+            <Text
+              className="text-sm font-semibold"
+              style={{ color: colors.text }} // Use theme text
+            >
+              Email
+            </Text>
           </TouchableOpacity>
 
+          {/* WhatsApp Card */}
           <TouchableOpacity
-            className="flex-1 bg-white rounded-xl p-4 items-center"
+            className="flex-1 rounded-xl p-4 items-center"
             activeOpacity={0.7}
             style={{
+              backgroundColor: colors.card, // Use theme card color
               shadowColor: "#000",
               shadowOffset: { width: 0, height: 2 },
-              shadowOpacity: 0.05,
+              shadowOpacity: 0.05, // Always show shadow
               shadowRadius: 8,
               elevation: 2,
             }}
           >
-            <View className="w-12 h-12 bg-green-100 rounded-full items-center justify-center mb-2">
+            <View
+              className="w-12 h-12 rounded-full items-center justify-center mb-2"
+              style={{ backgroundColor: colors.inputBg }} // Use theme inputBg as secondary bg
+            >
               <MaterialCommunityIcons
                 name="whatsapp"
                 size={24}
                 color="#10B981"
               />
             </View>
-            <Text className="text-sm font-semibold text-gray-900">
+            <Text
+              className="text-sm font-semibold"
+              style={{ color: colors.text }} // Use theme text
+            >
               WhatsApp
             </Text>
           </TouchableOpacity>
 
+          {/* Chat Card */}
           <TouchableOpacity
-            className="flex-1 bg-white rounded-xl p-4 items-center"
+            className="flex-1 rounded-xl p-4 items-center"
             activeOpacity={0.7}
             style={{
+              backgroundColor: colors.card, // Use theme card color
               shadowColor: "#000",
               shadowOffset: { width: 0, height: 2 },
-              shadowOpacity: 0.05,
+              shadowOpacity: 0.05, // Always show shadow
               shadowRadius: 8,
               elevation: 2,
             }}
           >
-            <View className="w-12 h-12 bg-purple-100 rounded-full items-center justify-center mb-2">
+            <View
+              className="w-12 h-12 rounded-full items-center justify-center mb-2"
+              style={{ backgroundColor: colors.inputBg }} // Use theme inputBg as secondary bg
+            >
               <Feather name="message-circle" size={24} color="#8B5CF6" />
             </View>
-            <Text className="text-sm font-semibold text-gray-900">Chat</Text>
+            <Text
+              className="text-sm font-semibold"
+              style={{ color: colors.text }} // Use theme text
+            >
+              Chat
+            </Text>
           </TouchableOpacity>
         </View>
 
-        {/* FAQs */}
-        <Text className="text-lg font-bold text-gray-900 mb-4">
+        {/* 8. Theme the FAQs Title */}
+        <Text
+          className="text-lg font-bold mb-4"
+          style={{ color: colors.text }} // Use theme text
+        >
           Frequently Asked Questions
         </Text>
 
+        {/* NOTE: You MUST update your 'FAQItem.tsx' component.
+          It needs to use 'useTheme()' inside itself to change its
+          background, question text, and answer text colors.
+        */}
         {faqs.map((faq, index) => (
           <FAQItem key={index} question={faq.question} answer={faq.answer} />
         ))}

@@ -23,25 +23,24 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   const [theme, setTheme] = useState<Theme>("light");
 
-  // Load theme from storage on mount
+  // Load saved theme on app start
   useEffect(() => {
-    loadTheme();
-  }, []);
-
-  const loadTheme = async () => {
-    try {
-      const savedTheme = await AsyncStorage.getItem("theme");
-      if (savedTheme === "dark" || savedTheme === "light") {
-        setTheme(savedTheme);
+    (async () => {
+      try {
+        const savedTheme = await AsyncStorage.getItem("theme");
+        if (savedTheme === "dark" || savedTheme === "light") {
+          setTheme(savedTheme);
+        }
+      } catch (error) {
+        console.log("Error loading theme:", error);
       }
-    } catch (error) {
-      console.log("Error loading theme:", error);
-    }
-  };
+    })();
+  }, []);
 
   const toggleTheme = async () => {
     const newTheme = theme === "light" ? "dark" : "light";
     setTheme(newTheme);
+
     try {
       await AsyncStorage.setItem("theme", newTheme);
     } catch (error) {

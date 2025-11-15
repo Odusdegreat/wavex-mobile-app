@@ -1,6 +1,7 @@
 import { Feather } from "@expo/vector-icons";
 import React from "react";
 import { Switch, Text, TouchableOpacity, View } from "react-native";
+import { useTheme } from "../context/ThemeContext";
 
 interface SettingsItemProps {
   icon: string;
@@ -27,9 +28,12 @@ export default function SettingsItem({
   iconBg = "#F3F4F6",
   iconColor = "#6B7280",
 }: SettingsItemProps) {
+  const { colors } = useTheme();
+
   return (
     <TouchableOpacity
-      className="flex-row items-center justify-between px-4 py-4 bg-white"
+      style={{ backgroundColor: colors.card }}
+      className="flex-row items-center justify-between px-4 py-4"
       onPress={onPress}
       activeOpacity={showSwitch ? 1 : 0.7}
       disabled={showSwitch}
@@ -42,9 +46,16 @@ export default function SettingsItem({
           <Feather name={icon as any} size={20} color={iconColor} />
         </View>
         <View className="flex-1">
-          <Text className="text-base font-semibold text-gray-900">{title}</Text>
+          <Text
+            style={{ color: colors.text }}
+            className="text-base font-semibold"
+          >
+            {title}
+          </Text>
           {subtitle && (
-            <Text className="text-sm text-gray-500 mt-0.5">{subtitle}</Text>
+            <Text style={{ color: colors.subtext }} className="text-sm mt-0.5">
+              {subtitle}
+            </Text>
           )}
         </View>
       </View>
@@ -57,7 +68,7 @@ export default function SettingsItem({
           thumbColor="#FFFFFF"
         />
       ) : showArrow ? (
-        <Feather name="chevron-right" size={20} color="#9CA3AF" />
+        <Feather name="chevron-right" size={20} color={colors.subtext} />
       ) : null}
     </TouchableOpacity>
   );
