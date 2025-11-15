@@ -45,7 +45,7 @@ export default function PaymentMethodsScreen() {
       >
         <View className="flex-row items-center">
           <TouchableOpacity
-            onPress={() => router.back()}
+            onPress={() => router.push("../settings")}
             className="w-10 h-10 rounded-full items-center justify-center mr-3"
             // 5. Apply secondary background from theme
             style={{ backgroundColor: colors.inputBg }}

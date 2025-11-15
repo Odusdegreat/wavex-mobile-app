@@ -40,7 +40,7 @@ export default function ChangePasswordScreen() {
         style={{ backgroundColor: colors.card }}
       >
         <TouchableOpacity
-          onPress={() => router.back()}
+          onPress={() => router.push("../settings")}
           className="w-10 h-10 rounded-full items-center justify-center mr-3"
           // 5. Apply secondary background from theme
           style={{ backgroundColor: colors.inputBg }}
