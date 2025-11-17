@@ -6,12 +6,19 @@ import { Feather } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
-import { Alert, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import {
+  Alert,
+  Platform,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native"; // Added Platform
 import { useTheme } from "../../context/ThemeContext";
 
 export default function SettingsScreen() {
   const router = useRouter();
-  const { isDark, toggleTheme, colors } = useTheme(); // Dark mode hook
+  const { isDark, toggleTheme, colors } = useTheme();
   const [notifications, setNotifications] = useState(true);
   const [biometric, setBiometric] = useState(false);
 
@@ -35,29 +42,34 @@ export default function SettingsScreen() {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 120 }}
       >
-        {/* Header */}
-        <View className="px-4 pt-12 pb-4">
+        {/* Header - APPLY PADDING FIX HERE */}
+        <View
+          className="px-4 pb-4"
+          // INCREASED PADDING TOP for more space and iOS notch clearance
+          style={{ paddingTop: Platform.OS === "ios" ? 60 : 20 }}
+        >
           <View className="flex-row items-center justify-between">
+            {/* 1. TEXT CONTAINER: Set height and align center */}
             <View>
               <Text
-                style={{ color: colors.text }}
-                className="text-2xl font-bold"
+                style={{ color: colors.subtext }}
+                // Removed redundant 'items-center' class
+                className="text-sm mt-1"
               >
-                Settings
-              </Text>
-              <Text style={{ color: colors.subtext }} className="text-sm mt-1">
                 Manage your account
               </Text>
             </View>
+
+            {/* Notification Button */}
             <TouchableOpacity
               className="w-10 h-10 rounded-full items-center justify-center"
               style={{
                 backgroundColor: colors.card,
                 shadowColor: "#000",
                 shadowOffset: { width: 0, height: 2 },
-                shadowOpacity: 0.05,
+                shadowOpacity: isDark ? 0 : 0.05,
                 shadowRadius: 4,
-                elevation: 2,
+                elevation: isDark ? 0 : 2,
               }}
             >
               <Feather name="bell" size={20} color={colors.text} />
@@ -132,6 +144,7 @@ export default function SettingsScreen() {
             style={{ backgroundColor: colors.border }}
             className="h-px ml-16"
           />
+          {/* Dark Mode Switch (Correct) */}
           <SettingsItem
             icon={isDark ? "sun" : "moon"}
             title={isDark ? "Light Mode" : "Dark Mode"}
@@ -197,9 +210,9 @@ export default function SettingsScreen() {
             backgroundColor: colors.card,
             shadowColor: "#000",
             shadowOffset: { width: 0, height: 2 },
-            shadowOpacity: 0.05,
+            shadowOpacity: isDark ? 0 : 0.05,
             shadowRadius: 8,
-            elevation: 2,
+            elevation: isDark ? 0 : 2,
           }}
         >
           <Feather name="log-out" size={20} color="#EF4444" />

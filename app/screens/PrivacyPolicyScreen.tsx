@@ -23,7 +23,7 @@ export default function PrivacyPolicyScreen() {
       >
         <TouchableOpacity
           // FIX: Changed router.push to router.back() for standard back behavior
-          onPress={() => router.back()}
+          onPress={() => router.push("/settings")}
           className="w-10 h-10 rounded-full items-center justify-center mr-3"
           // 5. Apply secondary background from theme
           style={{ backgroundColor: colors.subtext }}

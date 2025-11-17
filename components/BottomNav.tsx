@@ -43,30 +43,31 @@ export default function BottomNav() {
     scalesRef.current = tabs.map(() => new Animated.Value(1));
   }
 
-  // State to track which tab is currently being pressed down
+  // 🔥 NEW — Permanent highlight (selected tab)
+  const [selectedIndex, setSelectedIndex] = React.useState<number>(0);
+
+  // Temporary press state animation
   const [pressedIndex, setPressedIndex] = React.useState<number | null>(null);
 
-  // Animate active tab
+  // Animate on route change OR selectedIndex change
   React.useEffect(() => {
-    const activeIndex = tabs.findIndex(
-      (t) =>
-        t.route === pathname ||
-        (pathname === "/(tabs)" && t.route === "/(tabs)")
-    );
+    const activeIndex = selectedIndex;
+
     const animations = scalesRef.current.map((val, i) =>
       Animated.spring(val, {
-        toValue: i === activeIndex ? 1.2 : 1, // Active tab scales up
+        toValue: i === activeIndex ? 1.25 : 1,
         useNativeDriver: true,
         speed: 10,
         bounciness: 12,
       })
     );
+
     Animated.parallel(animations).start();
-  }, [pathname, tabs]);
+  }, [selectedIndex]);
 
   const handlePressIn = (index: number) => {
     setPressedIndex(index);
-    // Animate scale up slightly on press
+
     Animated.timing(scalesRef.current[index], {
       toValue: 1.15,
       duration: 100,
@@ -75,30 +76,28 @@ export default function BottomNav() {
   };
 
   const handlePressOut = (route: string, index: number) => {
-    setPressedIndex(null); // Clear pressed state
+    setPressedIndex(null);
 
-    // Navigate immediately. The useEffect will handle the "active" animation.
+    // 🔥 Update selectedIndex so highlight remains
+    setSelectedIndex(index);
+
     router.push(route as any);
   };
 
   return (
-    <View className="absolute bottom-0 left-0 right-0 z-50 ">
+    <View className="absolute bottom-0 left-0 right-0 z-50">
       <View
         className="flex-row justify-around items-center bg-white py-3"
         style={styles.shadow}
       >
         {tabs.map((tab, index) => {
-          const active =
-            pathname === tab.route ||
-            (pathname === "/(tabs)" && tab.route === "/(tabs)");
+          const isActive = selectedIndex === index;
 
-          // --- Define Colors ---
           const baseColor = "#94A3B8";
           const activeColor = "#00E5A0";
 
-          // Use activeColor if active OR if it's currently being pressed
           const color =
-            active || pressedIndex === index ? activeColor : baseColor;
+            isActive || pressedIndex === index ? activeColor : baseColor;
 
           return (
             <TouchableWithoutFeedback
@@ -110,7 +109,6 @@ export default function BottomNav() {
                 className="items-center justify-center px-3 py-1 rounded-full"
                 style={{
                   transform: [{ scale: scalesRef.current[index] }],
-                  backgroundColor: "transparent", // Background is always transparent
                 }}
               >
                 {tab.library === "feather" ? (
@@ -122,10 +120,8 @@ export default function BottomNav() {
                     color={color}
                   />
                 )}
-                <Text
-                  className="text-xs mt-1 font-medium"
-                  style={{ color: color }}
-                >
+
+                <Text className="text-xs mt-1 font-medium" style={{ color }}>
                   {tab.label}
                 </Text>
               </Animated.View>

@@ -5,7 +5,7 @@ import { Feather } from "@expo/vector-icons";
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
-import { useTheme } from "../../context/ThemeContext"; // 1. IMPORT THEME
+import { useTheme } from "../../context/ThemeContext";
 
 interface CryptoChart {
   id: string;
@@ -89,46 +89,12 @@ export default function PortfolioScreen() {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 120 }}
       >
-        {/* Header */}
-        <View className="flex-row items-center justify-between px-4 pt-12 pb-4">
-          <TouchableOpacity
-            className="w-10 h-10 rounded-full items-center justify-center"
-            style={{
-              // 5. APPLY THEME CARD BACKGROUND
-              backgroundColor: colors.card,
-              shadowColor: "#000",
-              shadowOffset: { width: 0, height: 2 },
-              // 6. MAKE SHADOW CONDITIONAL
-              shadowOpacity: isDark ? 0 : 0.05,
-              shadowRadius: 4,
-              elevation: isDark ? 0 : 2,
-            }}
-          >
-            {/* 7. APPLY THEME TEXT COLOR */}
-            <Feather name="arrow-left" size={20} color={colors.text} />
-          </TouchableOpacity>
+        {/* Header - Now simplified and centered */}
+        <View className="flex-row items-center justify-center px-4 pt-12 pb-4 mt-[60px]">
+          {/* Portfolio Title (Only element remaining) */}
 
-          {/* 8. APPLY THEME TEXT COLOR */}
-          <Text className="text-xl font-bold" style={{ color: colors.text }}>
-            Portfolio
-          </Text>
-
-          <TouchableOpacity
-            className="w-10 h-10 rounded-full items-center justify-center"
-            style={{
-              // 5. APPLY THEME CARD BACKGROUND
-              backgroundColor: colors.card,
-              shadowColor: "#000",
-              shadowOffset: { width: 0, height: 2 },
-              // 6. MAKE SHADOW CONDITIONAL
-              shadowOpacity: isDark ? 0 : 0.05,
-              shadowRadius: 4,
-              elevation: isDark ? 0 : 2,
-            }}
-          >
-            {/* 7. APPLY THEME TEXT COLOR */}
-            <Feather name="more-vertical" size={20} color={colors.text} />
-          </TouchableOpacity>
+          {/* Removed: Arrow Left Button */}
+          {/* Removed: More Vertical Button */}
         </View>
 
         {/* Stats Cards */}

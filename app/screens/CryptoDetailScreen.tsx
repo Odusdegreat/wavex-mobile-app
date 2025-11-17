@@ -4,12 +4,18 @@ import TimeFrameButton from "@/components/TimeFrameButton";
 import { Feather } from "@expo/vector-icons";
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
-import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+// 1. IMPORT Platform
+import {
+  Platform,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import Svg, { Path } from "react-native-svg";
-import { useTheme } from "../../context/ThemeContext"; // 1. IMPORT
+import { useTheme } from "../../context/ThemeContext";
 
 export default function CryptoDetailScreen() {
-  // 2. GET THEME
   const { colors } = useTheme();
 
   const [selectedTimeFrame, setSelectedTimeFrame] = useState("1H");
@@ -24,13 +30,11 @@ export default function CryptoDetailScreen() {
   };
 
   const marketStats: MarketStat[] = [
-    // ... (no changes needed in this array)
+    // Data truncated for brevity in this file
   ];
 
   return (
-    // 3. APPLY THEME BACKGROUND
     <View style={{ flex: 1, backgroundColor: colors.background }}>
-      {/* 4. APPLY THEME STATUS BAR */}
       <StatusBar style="auto" />
 
       <ScrollView
@@ -38,17 +42,20 @@ export default function CryptoDetailScreen() {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 40 }}
       >
-        {/* 5. APPLY THEME HEADER BACKGROUND */}
+        {/* HEADER - Increased paddingTop for better iOS notch clearance */}
         <View
-          className="px-4 pt-12 pb-4"
-          style={{ backgroundColor: colors.card }}
+          className="px-4 pb-4"
+          style={{
+            backgroundColor: colors.card,
+            // 2. INCREASED PADDING TOP for more space on iOS
+            paddingTop: Platform.OS === "ios" ? 70 : 16,
+          }}
         >
           <View className="flex-row items-center justify-between mb-4">
             <TouchableOpacity></TouchableOpacity>
 
             <View className="flex-row items-center">
               <TouchableOpacity className="mr-3">
-                {/* 6. APPLY THEME ICON COLOR */}
                 <Feather name="star" size={20} color={colors.subtext} />
               </TouchableOpacity>
               <TouchableOpacity
@@ -67,7 +74,6 @@ export default function CryptoDetailScreen() {
             <View className="w-10 h-10 bg-[#F7931A] rounded-full items-center justify-center mr-3">
               <Text className="text-white text-xl font-bold">₿</Text>
             </View>
-            {/* 7. APPLY THEME TEXT COLOR */}
             <Text className="text-xl font-bold" style={{ color: colors.text }}>
               Bitcoin
             </Text>
@@ -83,7 +89,6 @@ export default function CryptoDetailScreen() {
             </Text>
           </View>
           <View className="flex-row items-center">
-            {/* These green colors are brand colors, so they are fine */}
             <Text className="text-[#00E5A0] text-sm font-semibold mr-1">
               ▲ ₹700,254
             </Text>
@@ -129,7 +134,6 @@ export default function CryptoDetailScreen() {
           </View>
 
           {/* Time Frame Buttons */}
-          {/* 8. THIS COMPONENT MUST BE THEMED INTERNALLY */}
           <ScrollView
             horizontal
             showsHorizontalScrollIndicator={false}
@@ -208,7 +212,6 @@ export default function CryptoDetailScreen() {
           >
             Market Stats
           </Text>
-          {/* 9. THIS COMPONENT (MarketStatItem) MUST BE THEMED INTERNALLY */}
           {marketStats.map((stat, index) => (
             <MarketStatItem
               key={index}

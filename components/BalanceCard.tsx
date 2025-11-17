@@ -2,8 +2,6 @@ import { LinearGradient } from "expo-linear-gradient";
 import React, { useEffect, useRef, useState } from "react";
 import { Animated, Text, View } from "react-native";
 
-// 1. Import the DEFAULT export from your new file
-// (Assuming your new file is named ActionButton.tsx)
 import ActionButtons from "./ActionButton";
 
 interface BalanceCardProps {
@@ -38,11 +36,9 @@ export default function BalanceCard({
     };
   }, [balance, animatedValue]);
 
-  // 2. The handleDeposit and handleWithdraw functions are
-  //    no longer needed here, as they are inside ActionButtons.tsx
-
   return (
-    <View className="mx-4 mt-8 mb-4">
+    // ADJUSTED TOP MARGIN: increased mt-8 to mt-16 for maximum clearance on iOS notch
+    <View className="mx-4 mt-[100px] mb-4">
       <LinearGradient
         colors={["#00F5A0", "#00D68F"]}
         start={{ x: 0, y: 0 }}
@@ -69,6 +65,7 @@ export default function BalanceCard({
         </View>
 
         {/* Balance Section */}
+        {/* Increased margin below the balance for better separation */}
         <View className="mb-6">
           <Text className="text-white/90 text-sm mb-2">My Balance</Text>
           <View className="flex-row items-center">
@@ -89,7 +86,6 @@ export default function BalanceCard({
 
         {/* White Container with Buttons */}
         <View className="bg-white rounded-2xl p-4">
-          {/* 3. Render your new component directly */}
           <ActionButtons />
         </View>
       </LinearGradient>
