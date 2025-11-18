@@ -8,10 +8,14 @@ import {
   TouchableWithoutFeedback,
   View,
 } from "react-native";
+import { useTheme } from "./../context/ThemeContext";
 
 export default function BottomNav() {
   const router = useRouter();
   const pathname = usePathname();
+  const { theme } = useTheme();
+
+  const isDark = theme === "dark";
 
   const tabs = React.useMemo(
     () => [
@@ -43,19 +47,13 @@ export default function BottomNav() {
     scalesRef.current = tabs.map(() => new Animated.Value(1));
   }
 
-  // 🔥 NEW — Permanent highlight (selected tab)
   const [selectedIndex, setSelectedIndex] = React.useState<number>(0);
-
-  // Temporary press state animation
   const [pressedIndex, setPressedIndex] = React.useState<number | null>(null);
 
-  // Animate on route change OR selectedIndex change
   React.useEffect(() => {
-    const activeIndex = selectedIndex;
-
     const animations = scalesRef.current.map((val, i) =>
       Animated.spring(val, {
-        toValue: i === activeIndex ? 1.25 : 1,
+        toValue: i === selectedIndex ? 1.25 : 1,
         useNativeDriver: true,
         speed: 10,
         bounciness: 12,
@@ -77,27 +75,29 @@ export default function BottomNav() {
 
   const handlePressOut = (route: string, index: number) => {
     setPressedIndex(null);
-
-    // 🔥 Update selectedIndex so highlight remains
     setSelectedIndex(index);
-
     router.push(route as any);
   };
+
+  const bgColor = isDark ? "#0F172A" : "#FFFFFF"; // dark blue or white
+  const activeHighlight = "#00E5A0"; // stays same in both modes
+  const inactiveText = isDark ? "#64748B" : "#94A3B8"; // slate colors
 
   return (
     <View className="absolute bottom-0 left-0 right-0 z-50">
       <View
-        className="flex-row justify-around items-center bg-white py-3"
-        style={styles.shadow}
+        style={[
+          styles.navContainer,
+          {
+            backgroundColor: bgColor,
+          },
+        ]}
       >
         {tabs.map((tab, index) => {
           const isActive = selectedIndex === index;
 
-          const baseColor = "#94A3B8";
-          const activeColor = "#00E5A0";
-
           const color =
-            isActive || pressedIndex === index ? activeColor : baseColor;
+            isActive || pressedIndex === index ? activeHighlight : inactiveText;
 
           return (
             <TouchableWithoutFeedback
@@ -106,10 +106,12 @@ export default function BottomNav() {
               onPressOut={() => handlePressOut(tab.route, index)}
             >
               <Animated.View
-                className="items-center justify-center px-3 py-1 rounded-full"
-                style={{
-                  transform: [{ scale: scalesRef.current[index] }],
-                }}
+                style={[
+                  styles.tabItem,
+                  {
+                    transform: [{ scale: scalesRef.current[index] }],
+                  },
+                ]}
               >
                 {tab.library === "feather" ? (
                   <Feather name={tab.icon as any} size={24} color={color} />
@@ -121,9 +123,7 @@ export default function BottomNav() {
                   />
                 )}
 
-                <Text className="text-xs mt-1 font-medium" style={{ color }}>
-                  {tab.label}
-                </Text>
+                <Text style={[styles.tabLabel, { color }]}>{tab.label}</Text>
               </Animated.View>
             </TouchableWithoutFeedback>
           );
@@ -134,11 +134,28 @@ export default function BottomNav() {
 }
 
 const styles = StyleSheet.create({
-  shadow: {
+  navContainer: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
+    paddingVertical: 12,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: -2 },
     shadowOpacity: 0.15,
     shadowRadius: 15,
     elevation: 10,
+  },
+  tabItem: {
+    alignItems: "center",
+    justifyContent: "center",
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderRadius: 16,
+    minWidth: 70,
+  },
+  tabLabel: {
+    fontSize: 12,
+    marginTop: 4,
+    fontWeight: "600",
   },
 });
