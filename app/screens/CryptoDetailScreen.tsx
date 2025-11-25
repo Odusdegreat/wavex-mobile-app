@@ -4,7 +4,6 @@ import TimeFrameButton from "@/components/TimeFrameButton";
 import { Feather } from "@expo/vector-icons";
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
-// 1. IMPORT Platform
 import {
   Platform,
   ScrollView,
@@ -22,6 +21,7 @@ export default function CryptoDetailScreen() {
 
   const timeFrames = ["1H", "24 H", "1 W", "1 M", "6 M", "1 Y", "All"];
 
+  // FULL Market Stats (Restored)
   type MarketStat = {
     icon: React.ReactNode;
     label: string;
@@ -30,7 +30,36 @@ export default function CryptoDetailScreen() {
   };
 
   const marketStats: MarketStat[] = [
-    // Data truncated for brevity in this file
+    {
+      icon: <Feather name="activity" size={18} color="#3B82F6" />,
+      label: "Market Cap",
+      value: "₹1.57T",
+      iconColor: "#3B82F6",
+    },
+    {
+      icon: <Feather name="trending-up" size={18} color="#10B981" />,
+      label: "24h Volume",
+      value: "₹428.9B",
+      iconColor: "#10B981",
+    },
+    {
+      icon: <Feather name="bar-chart-2" size={18} color="#F59E0B" />,
+      label: "Circulating Supply",
+      value: "19,345,200 BTC",
+      iconColor: "#F59E0B",
+    },
+    {
+      icon: <Feather name="clock" size={18} color="#EF4444" />,
+      label: "All-Time High",
+      value: "₹5,624,000",
+      iconColor: "#EF4444",
+    },
+    {
+      icon: <Feather name="trending-down" size={18} color="#8B5CF6" />,
+      label: "24h Low",
+      value: "₹92,400",
+      iconColor: "#8B5CF6",
+    },
   ];
 
   return (
@@ -40,17 +69,17 @@ export default function CryptoDetailScreen() {
       <ScrollView
         className="flex-1"
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingBottom: 40 }}
+        contentContainerStyle={{ paddingBottom: 120 }}
       >
-        {/* HEADER - Increased paddingTop for better iOS notch clearance */}
+        {/* HEADER */}
         <View
           className="px-4 pb-4"
           style={{
             backgroundColor: colors.card,
-            // 2. INCREASED PADDING TOP for more space on iOS
             paddingTop: Platform.OS === "ios" ? 70 : 16,
           }}
         >
+          {/* Top Right Buttons */}
           <View className="flex-row items-center justify-between mb-4">
             <TouchableOpacity></TouchableOpacity>
 
@@ -116,21 +145,15 @@ export default function CryptoDetailScreen() {
 
           {/* Time Labels */}
           <View className="flex-row justify-between mb-4">
-            <Text className="text-xs" style={{ color: colors.subtext }}>
-              DEC 15
-            </Text>
-            <Text className="text-xs" style={{ color: colors.subtext }}>
-              DEC 24
-            </Text>
-            <Text className="text-xs" style={{ color: colors.subtext }}>
-              JAN 02
-            </Text>
-            <Text className="text-xs" style={{ color: colors.subtext }}>
-              JAN 11
-            </Text>
-            <Text className="text-xs" style={{ color: colors.subtext }}>
-              JAN 20
-            </Text>
+            {["DEC 15", "DEC 24", "JAN 02", "JAN 11", "JAN 20"].map((d) => (
+              <Text
+                key={d}
+                className="text-xs"
+                style={{ color: colors.subtext }}
+              >
+                {d}
+              </Text>
+            ))}
           </View>
 
           {/* Time Frame Buttons */}
@@ -172,6 +195,7 @@ export default function CryptoDetailScreen() {
                 </Text>
               </View>
             </View>
+
             <View className="items-end">
               <Text
                 className="text-base font-semibold"
@@ -212,6 +236,7 @@ export default function CryptoDetailScreen() {
           >
             Market Stats
           </Text>
+
           {marketStats.map((stat, index) => (
             <MarketStatItem
               key={index}
@@ -223,6 +248,8 @@ export default function CryptoDetailScreen() {
           ))}
         </View>
       </ScrollView>
+
+      {/* Bottom Navigation */}
       <ButtomNav />
     </View>
   );

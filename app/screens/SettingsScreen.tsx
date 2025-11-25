@@ -72,7 +72,12 @@ export default function SettingsScreen() {
                 elevation: isDark ? 0 : 2,
               }}
             >
-              <Feather name="bell" size={20} color={colors.text} />
+              <Feather
+                name="bell"
+                size={20}
+                color={colors.text}
+                onPress={() => router.push("/(tabs)/notifications")}
+              />
             </TouchableOpacity>
           </View>
         </View>
