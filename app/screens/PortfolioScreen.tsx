@@ -21,8 +21,8 @@ interface CryptoChart {
 }
 
 export default function PortfolioScreen() {
-  // 2. INITIALIZE THEME HOOK
   const { isDark, colors } = useTheme();
+
   const [chartData] = useState<CryptoChart[]>([
     {
       id: "1",
@@ -79,62 +79,47 @@ export default function PortfolioScreen() {
   };
 
   return (
-    // 3. APPLY THEME BACKGROUND
     <View style={{ flex: 1, backgroundColor: colors.background }}>
-      {/* 4. APPLY THEME STATUS BAR */}
       <StatusBar style={isDark ? "light" : "dark"} />
 
       <ScrollView
-        className="flex-1"
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 120 }}
       >
-        {/* Header - Now simplified and centered */}
-        <View className="flex-row items-center justify-center px-4 pt-12 pb-4 mt-[60px]">
-          {/* Portfolio Title (Only element remaining) */}
+        <View className="px-4 pt-20 pb-4"></View>
 
-          {/* Removed: Arrow Left Button */}
-          {/* Removed: More Vertical Button */}
-        </View>
-
-        {/* Stats Cards */}
+        {/* Stats */}
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
           className="px-4 mb-6"
           contentContainerStyle={{ paddingRight: 16 }}
         >
-          {/* Note: StatsCard must be themed internally */}
           <StatsCard
             icon="💸"
             count={17}
             label="Total transactions"
             variant="primary"
           />
+
           <TouchableOpacity
-            // This is a static dark card, it should look fine
             className="rounded-2xl p-4 items-center justify-center mr-4"
-            style={[
-              {
-                backgroundColor: "#1E293B",
-                minWidth: 120,
-              },
-            ]}
+            style={{ backgroundColor: "#1E293B", minWidth: 120 }}
           >
             <Feather
               name="send"
               size={24}
-              color="#FFFFFF"
+              color="#FFF"
               style={{ marginBottom: 4 }}
             />
             <Text className="text-white text-sm font-semibold">Send</Text>
           </TouchableOpacity>
-          <StatsCard icon="" count={70} label="Limit" variant="dark" />
+
+          <StatsCard icon="📊" count={70} label="Limit" variant="dark" />
         </ScrollView>
 
-        {/* Charts Section */}
+        {/* Charts */}
         <View className="flex-row items-center justify-between px-4 mb-4">
-          {/* 8. APPLY THEME TEXT COLOR */}
           <Text className="text-xl font-bold" style={{ color: colors.text }}>
             Charts
           </Text>
@@ -145,9 +130,7 @@ export default function PortfolioScreen() {
           </TouchableOpacity>
         </View>
 
-        {/* Chart List */}
         <View>
-          {/* Note: ChartItem must be themed internally */}
           {chartData.map((item) => (
             <ChartItem
               key={item.id}

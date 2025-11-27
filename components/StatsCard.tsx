@@ -1,39 +1,36 @@
 import React from "react";
 import { Text, View } from "react-native";
-// 1. IMPORT our new animation tool
-import { useAnimatedCountUp } from "../app/hooks/useAnimatedCountUp";
 
-interface StatsCardProps {
-  icon: string;
+interface Props {
+  icon?: string;
   count: number;
   label: string;
   variant?: "primary" | "dark";
 }
 
-export default function StatsCard({
-  icon,
-  count,
-  label,
-  variant,
-}: StatsCardProps) {
-  // 2. USE the tool to animate the 'count' prop
-  const animatedCount = useAnimatedCountUp(count);
-
-  const isPrimary = variant === "primary";
-  const bgColor = isPrimary ? "bg-[#00F5A0]" : "bg-[#1E293B]";
-  const textColor = "text-white";
+export default function StatsCard({ icon, count, label, variant }: Props) {
+  const bg = variant === "primary" ? "#00E5A0" : "#1E293B";
+  const textColor = variant === "primary" ? "#000" : "#FFF";
 
   return (
     <View
-      className={`${bgColor} rounded-2xl p-4 mr-4`}
-      style={{ minWidth: 120 }}
+      style={{
+        backgroundColor: bg,
+        padding: 16,
+        borderRadius: 16,
+        minWidth: 140,
+        marginRight: 16,
+      }}
     >
-      {!!icon && <Text className="text-2xl mb-2">{icon}</Text>}
-      <Text className={`${textColor} text-3xl font-bold mb-1`}>
-        {/* 3. DISPLAY the animated number (using toFixed(0) to remove decimals) */}
-        {animatedCount.toFixed(0)}
+      {icon ? (
+        <Text style={{ fontSize: 22, marginBottom: 4 }}>{icon}</Text>
+      ) : null}
+
+      <Text style={{ fontSize: 20, fontWeight: "bold", color: textColor }}>
+        {count}
       </Text>
-      <Text className={`${textColor} text-sm font-semibold`}>{label}</Text>_
+
+      <Text style={{ color: textColor, marginTop: 4 }}>{label}</Text>
     </View>
   );
 }
