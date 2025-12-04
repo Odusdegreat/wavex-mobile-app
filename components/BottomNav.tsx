@@ -1,6 +1,6 @@
 import { Feather, MaterialCommunityIcons } from "@expo/vector-icons";
 import { usePathname, useRouter } from "expo-router";
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useTheme } from "./../context/ThemeContext";
@@ -34,12 +34,21 @@ export default function BottomNav() {
     },
   ];
 
-  const getActiveIndex = () =>
-    tabs.findIndex((tab) => pathname.startsWith(tab.route));
+  // Debug: Log the pathname whenever it changes
+  useEffect(() => {
+    console.log("Current pathname:", pathname);
+  }, [pathname]);
+
+  const getActiveIndex = () => {
+    const index = tabs.findIndex((tab) => pathname.startsWith(tab.route));
+    console.log("Active index:", index);
+    return index;
+  };
 
   const activeIndex = getActiveIndex();
 
   const handlePress = (route: string) => {
+    console.log("Navigating to:", route);
     router.push(route as any);
   };
 
@@ -58,6 +67,7 @@ export default function BottomNav() {
       >
         {tabs.map((tab, index) => {
           const isActive = index === activeIndex;
+          console.log(`${tab.label} - isActive:`, isActive);
 
           return (
             <TabButton
@@ -95,32 +105,16 @@ function TabButton({
   activeHighlight,
   inactiveText,
 }: TabButtonProps) {
-  const [isPressed, setIsPressed] = useState(false);
-
-  const handlePressIn = () => {
-    setIsPressed(true);
-  };
-
-  const handlePressOut = () => {
-    setIsPressed(false);
-  };
-
-  const color = isActive || isPressed ? activeHighlight : inactiveText;
-  const backgroundColor = isPressed ? `${activeHighlight}15` : "transparent";
+  const color = isActive ? activeHighlight : inactiveText;
 
   return (
     <TouchableOpacity
       onPress={onPress}
-      onPressIn={handlePressIn}
-      onPressOut={handlePressOut}
-      activeOpacity={1}
+      activeOpacity={0.7}
       className="items-center justify-center flex-1"
     >
       <View className="relative items-center justify-center w-12 h-12">
-        <View
-          className="items-center justify-center w-12 h-12 rounded-xl"
-          style={{ backgroundColor }}
-        >
+        <View className="items-center justify-center w-12 h-12">
           {tab.library === "feather" ? (
             <Feather name={tab.icon as any} size={24} color={color} />
           ) : (
