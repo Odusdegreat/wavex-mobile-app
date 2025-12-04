@@ -1,13 +1,7 @@
 import { Feather, MaterialCommunityIcons } from "@expo/vector-icons";
 import { usePathname, useRouter } from "expo-router";
 import React, { useState } from "react";
-import {
-  Platform,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useTheme } from "./../context/ThemeContext";
 
@@ -49,24 +43,18 @@ export default function BottomNav() {
     router.push(route as any);
   };
 
-  const bgColor = isDark ? "#0F172A" : "#FFFFFF";
   const activeHighlight = "#00E5A0";
   const inactiveText = isDark ? "#64748B" : "#94A3B8";
 
   return (
     <SafeAreaView
       edges={["bottom"]}
-      style={{
-        backgroundColor: bgColor,
-      }}
+      className={isDark ? "bg-slate-900" : "bg-white"}
     >
       <View
-        style={[
-          styles.navContainer,
-          {
-            backgroundColor: bgColor,
-          },
-        ]}
+        className={`flex-row justify-between px-8 pt-2.5 h-[70px] border-t border-black/10 ${
+          isDark ? "bg-slate-900" : "bg-white"
+        }`}
       >
         {tabs.map((tab, index) => {
           const isActive = index === activeIndex;
@@ -126,17 +114,12 @@ function TabButton({
       onPressIn={handlePressIn}
       onPressOut={handlePressOut}
       activeOpacity={1}
-      style={styles.tabContainer}
+      className="items-center justify-center flex-1"
     >
-      <View style={styles.tabWrapper}>
+      <View className="relative items-center justify-center w-12 h-12">
         <View
-          style={[
-            styles.iconContainer,
-            {
-              backgroundColor: backgroundColor,
-              borderRadius: 12,
-            },
-          ]}
+          className="items-center justify-center w-12 h-12 rounded-xl"
+          style={{ backgroundColor }}
         >
           {tab.library === "feather" ? (
             <Feather name={tab.icon as any} size={24} color={color} />
@@ -150,62 +133,15 @@ function TabButton({
         </View>
         {isActive && (
           <View
-            style={[
-              styles.activeIndicator,
-              { backgroundColor: activeHighlight },
-            ]}
+            className="w-5 h-[3px] rounded-sm mt-1"
+            style={{ backgroundColor: activeHighlight }}
           />
         )}
       </View>
 
-      <Text style={[styles.tabLabel, { color }]}>{tab.label}</Text>
+      <Text className="text-[11px] mt-0.5 font-semibold" style={{ color }}>
+        {tab.label}
+      </Text>
     </TouchableOpacity>
   );
 }
-
-const styles = StyleSheet.create({
-  navContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    paddingHorizontal: 30,
-    paddingTop: 10,
-    paddingBottom: Platform.OS === "ios" ? 5 : 10,
-    height: 70,
-    borderTopWidth: 0.4,
-    borderTopColor: "rgba(0,0,0,0.1)",
-  },
-
-  tabContainer: {
-    alignItems: "center",
-    justifyContent: "center",
-    flex: 1,
-  },
-
-  tabWrapper: {
-    position: "relative",
-    alignItems: "center",
-    justifyContent: "center",
-    width: 48,
-    height: 48,
-  },
-
-  iconContainer: {
-    alignItems: "center",
-    justifyContent: "center",
-    width: 48,
-    height: 48,
-  },
-
-  activeIndicator: {
-    width: 20,
-    height: 3,
-    borderRadius: 2,
-    marginTop: 4,
-  },
-
-  tabLabel: {
-    fontSize: 11,
-    marginTop: 3,
-    fontWeight: "600",
-  },
-});
