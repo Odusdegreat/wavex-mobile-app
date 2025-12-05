@@ -119,7 +119,7 @@ function TabButton({
             <Feather name={tab.icon as any} size={24} color={color} />
           ) : (
             <MaterialCommunityIcons
-              name={tab.icon as any}
+              name={tab.icon as any
               size={26}
               color={color}
             />
