@@ -8,7 +8,7 @@ export default function TabLayout() {
         tabBarStyle: { display: "none" },
       }}
     >
-      <Tabs.Screen name="index" options={{ title: "" }} />
+      <Tabs.Screen name="home" options={{ title: "" }} />
       <Tabs.Screen name="portfolio" options={{ title: "" }} />
       <Tabs.Screen name="transactions" options={{ title: "" }} />{" "}
       {/* ✅ This must exist! */}

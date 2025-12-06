@@ -1,3 +1,5 @@
-import CryptoDetailScreen from "../screens/CryptoDetailScreen";
+import TransactionScreen from "../screens/TransactionScreen";
 
-export default CryptoDetailScreen;
+export default function Transaction() {
+  return <TransactionScreen />;
+}
