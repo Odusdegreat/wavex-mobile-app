@@ -59,9 +59,6 @@ export default function BalanceCard({
             <Text className="text-white/90 text-sm mb-1">Welcome to</Text>
             <Text className="text-white text-3xl font-bold">WaVex</Text>
           </View>
-          <View className="bg-white/30 w-11 h-11 rounded-full items-center justify-center">
-            <Text className="text-white text-lg">🔔</Text>
-          </View>
         </View>
 
         {/* Balance Section */}
