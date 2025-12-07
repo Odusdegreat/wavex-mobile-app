@@ -22,7 +22,7 @@
       "predictiveBackGestureEnabled": false
     },
     "web": {
-      "bundler": "metro", // ✅ important for Nativewind
+      "bundler": "metro",
       "output": "static",
       "favicon": "./assets/images/favicon.png"
     },
@@ -44,6 +44,18 @@
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "c6771c77-836f-4acf-bbb9-112c0fd9820c"
+      }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/c6771c77-836f-4acf-bbb9-112c0fd9820c"
     }
   }
 }
