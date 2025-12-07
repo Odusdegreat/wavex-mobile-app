@@ -1,21 +1,50 @@
-Tech Stack (Wavex Mobile App)
+🚀 Tech Stack
+📱 Mobile Framework
 
-React Native – main framework for building the mobile app
+React Native (for building cross-platform mobile UI)
 
-Expo – for development, bundling, and deployment
+Expo (for development, testing, and deployment)
 
-Tailwind CSS (NativeWind) – for styling the UI
+⚛️ Frontend Technologies
 
-TypeScript – for type-safe development
+JavaScript / TypeScript
 
-React Navigation – for navigating between screens
+React Hooks (useState, useEffect, useRef, etc.)
 
-Expo Vector Icons – for icons across the app
+React Navigation (for screen routing & tab navigation)
 
-Expo Router (if used)
+🎨 UI & Styling
 
-AsyncStorage – for storing local app data
+NativeWind (Tailwind for React Native)
 
-Context API / React Hooks – for app-wide state management
+Custom Components & Theming
 
-Expo SecureStore (if used for sensitive data)
+Expo Vector Icons (Ionicons, Feather, MaterialIcons, etc.)
+
+📊 Crypto & Portfolio Logic
+
+Local State Management / Context API
+
+Dummy or Live API (CoinGecko, Binance, etc.) — depending on your setup
+
+Chart Libraries (if applicable)
+
+⚙️ App Utilities
+
+expo-router (if you're using it)
+
+AsyncStorage (for saving user settings or data)
+
+Expo SecureStore (if handling sensitive data)
+
+🧪 Testing & Development
+
+Expo Go App (for live preview)
+
+Metro Bundler
+
+🛠️ Build & Deployment
+
+Expo Build (for generating preview links)
+
+Expo EAS (optional)
